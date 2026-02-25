@@ -59,11 +59,11 @@ public class User extends BaseEntity {
         this.status = Status.ACTIVE;
     }
 
-    public void setTutor(Tutor tutor) {
+    void setTutor(Tutor tutor) {
         this.tutor = tutor;
     }
 
-    public void setStudent(Student student) {
+    void setStudent(Student student) {
         this.student = student;
     }
 }
