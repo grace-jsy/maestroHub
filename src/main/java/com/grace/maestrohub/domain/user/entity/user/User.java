@@ -38,8 +38,14 @@ public class User extends BaseEntity {
     @Column(nullable = false)
     private Status status;
 
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Student student;
+
+    @OneToOne(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Tutor tutor;
+
     @Builder
-    private User(String email, String password, String username, String phone, UserRole role, String region, Status status) {
+    private User(String email, String password, String username, String phone, UserRole role, String region) {
         this.email = email;
         this.password = password;
         this.username = username;
@@ -51,6 +57,14 @@ public class User extends BaseEntity {
 
     public void activate() {
         this.status = Status.ACTIVE;
+    }
+
+    public void setTutor(Tutor tutor) {
+        this.tutor = tutor;
+    }
+
+    public void setStudent(Student student) {
+        this.student = student;
     }
 }
 
