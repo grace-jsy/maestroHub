@@ -6,8 +6,6 @@ import com.grace.maestrohub.domain.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.*;
 
-import java.time.LocalDateTime;
-
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
