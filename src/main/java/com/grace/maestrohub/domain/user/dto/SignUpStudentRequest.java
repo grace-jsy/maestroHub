@@ -18,10 +18,10 @@ public class SignUpStudentRequest {
     private String preferredInstrument;
     private String introduction;
 
-    public User toUser() {
+    public User toUser(String encodedPassword) {
         return User.builder()
                 .email(email)
-                .password(password)
+                .password(encodedPassword)
                 .username(username)
                 .phone(phone)
                 .role(UserRole.STUDENT)

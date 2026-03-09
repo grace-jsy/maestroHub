@@ -10,6 +10,7 @@ import com.grace.maestrohub.domain.user.repository.StudentRepository;
 import com.grace.maestrohub.domain.user.repository.TutorRepository;
 import com.grace.maestrohub.domain.user.repository.UserRepository;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class UserService {
 
+    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final TutorRepository tutorRepository;
@@ -27,7 +29,10 @@ public class UserService {
 
         validateDuplicateEmail(request.getEmail());
 
-        User savedUser = userRepository.save(request.toUser());
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        User user = request.toUser(encodedPassword);
+        User savedUser = userRepository.save(user);
 
         Student student = request.toStudent(savedUser);
         studentRepository.save(student);
@@ -49,7 +54,10 @@ public class UserService {
 
         validateDuplicateEmail(request.getEmail());
 
-        User savedUser = userRepository.save(request.toUser());
+        String encodedPassword = passwordEncoder.encode(request.getPassword());
+
+        User user = request.toUser(encodedPassword);
+        User savedUser = userRepository.save(user);
 
         Tutor tutor = request.toTutor(savedUser);
         tutorRepository.save(tutor);
