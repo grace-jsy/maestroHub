@@ -4,6 +4,7 @@ import com.grace.maestrohub.domain.user.dto.SignUpResponseDto;
 import com.grace.maestrohub.domain.user.dto.SignUpStudentRequest;
 import com.grace.maestrohub.domain.user.dto.SignUpTutorRequest;
 import com.grace.maestrohub.domain.user.service.UserService;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,14 +21,14 @@ public class UserController {
 
     // Sign up - Student
     @PostMapping("/signup/student")
-    public ResponseEntity<SignUpResponseDto> signUpStudent(@RequestBody SignUpStudentRequest request) {
+    public ResponseEntity<SignUpResponseDto> signUpStudent(@Valid @RequestBody SignUpStudentRequest request) {
         SignUpResponseDto response = userService.signupStudent(request);
         return ResponseEntity.ok(response);
     }
 
     // Sign up - Tutor
     @PostMapping("/signup/tutor")
-    public ResponseEntity<SignUpResponseDto> signUpTutor(@RequestBody SignUpTutorRequest request) {
+    public ResponseEntity<SignUpResponseDto> signUpTutor(@Valid @RequestBody SignUpTutorRequest request) {
         SignUpResponseDto response = userService.signupTutor(request);
         return ResponseEntity.ok(response);
     }
