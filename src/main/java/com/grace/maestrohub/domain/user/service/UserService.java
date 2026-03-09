@@ -1,5 +1,7 @@
 package com.grace.maestrohub.domain.user.service;
 
+import com.grace.maestrohub.common.exception.CustomException;
+import com.grace.maestrohub.common.exception.ErrorCode;
 import com.grace.maestrohub.domain.user.dto.SignUpResponseDto;
 import com.grace.maestrohub.domain.user.dto.SignUpStudentRequest;
 import com.grace.maestrohub.domain.user.dto.SignUpTutorRequest;
@@ -75,7 +77,7 @@ public class UserService {
 
     private void validateDuplicateEmail(String email) {
         if (userRepository.existsByEmail(email)) {
-            throw new IllegalArgumentException("Email already exists");
+            throw new CustomException(ErrorCode.DUPLICATE_EMAIL);
         }
     }
 }

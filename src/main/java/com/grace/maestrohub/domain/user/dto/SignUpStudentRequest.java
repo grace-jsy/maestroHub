@@ -4,16 +4,27 @@ import com.grace.maestrohub.domain.user.entity.user.Student;
 import com.grace.maestrohub.domain.user.entity.user.User;
 import com.grace.maestrohub.domain.user.enums.StudentLevel;
 import com.grace.maestrohub.domain.user.enums.UserRole;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 
 @Getter
 public class SignUpStudentRequest {
-    private String email;
-    private String password;
-    private String username;
-    private String phone;
-    private String region;
 
+    @NotBlank(message = "Invalid email format")
+    @Email(message = "Email is required")
+    private String email;
+
+    @NotBlank(message = "Password is required")
+    private String password;
+
+    @NotBlank(message = "Username is required")
+    private String username;
+
+    @NotBlank(message = "Phone is required")
+    private String phone;
+
+    private String region;
     private StudentLevel level;
     private String preferredInstrument;
     private String introduction;
