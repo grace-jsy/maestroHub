@@ -1,7 +1,9 @@
-package com.grace.maestrohub.domain.user.service;
+package com.grace.maestrohub.domain.auth.service;
 
 import com.grace.maestrohub.common.exception.CustomException;
 import com.grace.maestrohub.common.exception.ErrorCode;
+import com.grace.maestrohub.domain.auth.dto.LoginRequest;
+import com.grace.maestrohub.domain.auth.dto.LoginResponse;
 import com.grace.maestrohub.domain.user.dto.SignUpResponse;
 import com.grace.maestrohub.domain.user.dto.SignUpStudentRequest;
 import com.grace.maestrohub.domain.user.dto.SignUpTutorRequest;
@@ -18,14 +20,13 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-public class UserService {
+public class AuthService {
 
-    private final PasswordEncoder passwordEncoder;
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
     private final TutorRepository tutorRepository;
+    private final PasswordEncoder passwordEncoder;
 
-    // Sign Up - Student
     @Transactional
     public SignUpResponse signupStudent(SignUpStudentRequest request) {
 
@@ -50,7 +51,6 @@ public class UserService {
         );
     }
 
-    // Sign Up - Tutor
     @Transactional
     public SignUpResponse signupTutor(SignUpTutorRequest request) {
 
@@ -72,6 +72,25 @@ public class UserService {
                 savedUser.getRegion(),
                 savedUser.getRole(),
                 savedUser.getStatus()
+        );
+    }
+
+    @Transactional(readOnly = true)
+    public LoginResponse login(LoginRequest request) {
+
+        User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
+                () -> new CustomException(ErrorCode.INVALID_LOGIN)
+        );
+
+        if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
+            throw new CustomException(ErrorCode.INVALID_LOGIN);
+        }
+
+        return new LoginResponse(
+                user.getId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.getRole()
         );
     }
 
