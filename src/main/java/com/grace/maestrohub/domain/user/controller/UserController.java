@@ -1,6 +1,6 @@
 package com.grace.maestrohub.domain.user.controller;
 
-import com.grace.maestrohub.domain.user.dto.SignUpResponseDto;
+import com.grace.maestrohub.domain.user.dto.SignUpResponse;
 import com.grace.maestrohub.domain.user.dto.SignUpStudentRequest;
 import com.grace.maestrohub.domain.user.dto.SignUpTutorRequest;
 import com.grace.maestrohub.domain.user.service.UserService;
@@ -21,15 +21,15 @@ public class UserController {
 
     // Sign up - Student
     @PostMapping("/signup/student")
-    public ResponseEntity<SignUpResponseDto> signUpStudent(@Valid @RequestBody SignUpStudentRequest request) {
-        SignUpResponseDto response = userService.signupStudent(request);
+    public ResponseEntity<SignUpResponse> signUpStudent(@Valid @RequestBody SignUpStudentRequest request) {
+        SignUpResponse response = userService.signupStudent(request);
         return ResponseEntity.ok(response);
     }
 
     // Sign up - Tutor
     @PostMapping("/signup/tutor")
-    public ResponseEntity<SignUpResponseDto> signUpTutor(@Valid @RequestBody SignUpTutorRequest request) {
-        SignUpResponseDto response = userService.signupTutor(request);
+    public ResponseEntity<SignUpResponse> signUpTutor(@Valid @RequestBody SignUpTutorRequest request) {
+        SignUpResponse response = userService.signupTutor(request);
         return ResponseEntity.ok(response);
     }
 }

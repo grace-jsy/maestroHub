@@ -2,7 +2,7 @@ package com.grace.maestrohub.domain.user.service;
 
 import com.grace.maestrohub.common.exception.CustomException;
 import com.grace.maestrohub.common.exception.ErrorCode;
-import com.grace.maestrohub.domain.user.dto.SignUpResponseDto;
+import com.grace.maestrohub.domain.user.dto.SignUpResponse;
 import com.grace.maestrohub.domain.user.dto.SignUpStudentRequest;
 import com.grace.maestrohub.domain.user.dto.SignUpTutorRequest;
 import com.grace.maestrohub.domain.user.entity.user.Student;
@@ -27,7 +27,7 @@ public class UserService {
 
     // Sign Up - Student
     @Transactional
-    public SignUpResponseDto signupStudent(SignUpStudentRequest request) {
+    public SignUpResponse signupStudent(SignUpStudentRequest request) {
 
         validateDuplicateEmail(request.getEmail());
 
@@ -39,7 +39,7 @@ public class UserService {
         Student student = request.toStudent(savedUser);
         studentRepository.save(student);
 
-        return new SignUpResponseDto(
+        return new SignUpResponse(
                 savedUser.getId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
@@ -52,7 +52,7 @@ public class UserService {
 
     // Sign Up - Tutor
     @Transactional
-    public SignUpResponseDto signupTutor(SignUpTutorRequest request) {
+    public SignUpResponse signupTutor(SignUpTutorRequest request) {
 
         validateDuplicateEmail(request.getEmail());
 
@@ -64,7 +64,7 @@ public class UserService {
         Tutor tutor = request.toTutor(savedUser);
         tutorRepository.save(tutor);
 
-        return new SignUpResponseDto(
+        return new SignUpResponse(
                 savedUser.getId(),
                 savedUser.getUsername(),
                 savedUser.getEmail(),
