@@ -24,7 +24,7 @@ public class AuthService {
 
     private final UserRepository userRepository;
     private final StudentRepository studentRepository;
-    private TutorRepository tutorRepository;
+    private final TutorRepository tutorRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Transactional
@@ -75,15 +75,15 @@ public class AuthService {
         );
     }
 
-    @Transactional
+    @Transactional(readOnly = true)
     public LoginResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail()).orElseThrow(
-                () -> new CustomException(ErrorCode.USER_NOT_FOUND)
+                () -> new CustomException(ErrorCode.INVALID_LOGIN)
         );
 
         if (!passwordEncoder.matches(request.getPassword(), user.getPassword())) {
-            throw new CustomException(ErrorCode.USER_NOT_FOUND);
+            throw new CustomException(ErrorCode.INVALID_LOGIN);
         }
 
         return new LoginResponse(

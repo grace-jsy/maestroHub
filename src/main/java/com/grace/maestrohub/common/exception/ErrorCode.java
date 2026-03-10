@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 public enum ErrorCode {
     USER_NOT_FOUND(HttpStatus.NOT_FOUND, "USER_404", "User not found"),
     INVALID_REQUEST(HttpStatus.BAD_REQUEST, "COMMON_400", "Invalid request"),
+    INVALID_LOGIN(HttpStatus.UNAUTHORIZED, "AUTH_401", "Invalid email or password"),
     INTERNAL_ERROR(HttpStatus.INTERNAL_SERVER_ERROR, "COMMON_500", "Internal server error"),
     DUPLICATE_EMAIL(HttpStatus.CONFLICT, "USER_409", "Email already exists");
 
