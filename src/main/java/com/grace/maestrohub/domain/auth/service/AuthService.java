@@ -2,6 +2,7 @@ package com.grace.maestrohub.domain.auth.service;
 
 import com.grace.maestrohub.common.exception.CustomException;
 import com.grace.maestrohub.common.exception.ErrorCode;
+import com.grace.maestrohub.common.security.jwt.JwtProvider;
 import com.grace.maestrohub.domain.auth.dto.LoginRequest;
 import com.grace.maestrohub.domain.auth.dto.LoginResponse;
 import com.grace.maestrohub.domain.user.dto.SignUpResponse;
@@ -26,6 +27,7 @@ public class AuthService {
     private final StudentRepository studentRepository;
     private final TutorRepository tutorRepository;
     private final PasswordEncoder passwordEncoder;
+    private final JwtProvider jwtProvider;
 
     @Transactional
     public SignUpResponse signupStudent(SignUpStudentRequest request) {
@@ -86,11 +88,14 @@ public class AuthService {
             throw new CustomException(ErrorCode.INVALID_LOGIN);
         }
 
+        String accessToken = jwtProvider.generateToken(user);
+
         return new LoginResponse(
                 user.getId(),
                 user.getUsername(),
                 user.getEmail(),
-                user.getRole()
+                user.getRole(),
+                accessToken
         );
     }
 

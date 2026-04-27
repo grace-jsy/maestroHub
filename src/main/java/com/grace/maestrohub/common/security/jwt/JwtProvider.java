@@ -3,7 +3,6 @@ package com.grace.maestrohub.common.security.jwt;
 import com.grace.maestrohub.domain.user.entity.user.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import jakarta.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
@@ -24,8 +23,7 @@ public class JwtProvider {
 
     @PostConstruct
     public void init() {
-        byte[] keyBytes = Decoders.BASE64.decode(jwtProperties.secret());
-        this.secretKey = Keys.hmacShaKeyFor(keyBytes);
+        this.secretKey = Keys.hmacShaKeyFor(jwtProperties.secret().getBytes());
     }
 
     public String generateToken(User user) {
